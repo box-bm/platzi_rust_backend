@@ -1,5 +1,6 @@
+use super::schema::posts;
 use diesel::prelude::*;
-use diesel::{Insertable, Queryable, PgConnection, RunQueryDsl};
+use diesel::{Insertable, PgConnection, Queryable};
 use serde::{Deserialize, Serialize};
 
 #[derive(Queryable, Debug, Deserialize, Serialize)]
@@ -17,12 +18,10 @@ pub struct Post {
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
-pub struct NewPostHandler  {
-    pub title : String,
-    pub body: String
+pub struct NewPostHandler {
+    pub title: String,
+    pub body: String,
 }
-
-use crate::schema::posts;
 
 #[derive(Insertable)]
 #[diesel(table_name = posts)]
@@ -32,19 +31,24 @@ pub struct NewPost<'a> {
     pub slug: &'a str,
 }
 
-
 impl Post {
-
-    pub fn slugify (title: &String) -> String {
-        return  title.replace(" ", "-").to_lowercase();
+    pub fn slugify(title: &String) -> String {
+        return title.replace(" ", "-").to_lowercase();
     }
-    pub fn create_post<'a>(conn: &PgConnection, post: &NewPostHandler) -> Result<Post, diesel::result::Error> {
+    pub fn create_post<'a>(
+        conn: &mut PgConnection,
+        post: &NewPostHandler,
+    ) -> Result<Post, diesel::result::Error> {
         let slug = Post::slugify(&post.title.clone());
+
         let new_post = NewPost {
             title: &post.title,
             slug: &slug,
-            body: &post.body
+            body: &post.body,
         };
-        return diesel::insert_into(posts::table).values(new_post).get_result::<Post>(&mut conn);
+
+        diesel::insert_into(posts::table)
+            .values(new_post)
+            .get_result::<Post>(conn)
     }
 }
