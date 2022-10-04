@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mi blog</title>
+
+    <!-- Bootstrap -->
+    <link
+      href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">Home</a>
+      </div>
+    </nav>
+    <main class="container">
+      {% for post in posts %}
+      <div class="bg-light p-5 rounded">
+        <a class="h1" href="/blog/{{ post.slug }}">{{ post.title }}</a>
+        <p class="lead">{{ post.body | truncate(length=150) }}</p>
+      </div>
+      {% endfor %}
+    </main>
+
+    <!-- Mas Bootstrap -->
+    <script
+      src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
