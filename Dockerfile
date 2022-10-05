@@ -30,6 +30,7 @@ RUN apt-get update && apt-get install curl pkg-config libssl-dev build-essential
 WORKDIR /app
 
 ## Copiamos desde el otro contenedor, los archivos de la aplicación
+# COPY --from=0 /app/.env /app
 COPY --from=0 /app/target/release/blog-platzi /app
 COPY /templates/ /app/templates
 
