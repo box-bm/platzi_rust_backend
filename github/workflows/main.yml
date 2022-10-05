@@ -1,0 +1,16 @@
+name: Deploy
+on:
+  push:
+    branches:
+      - main      # main o master, dependiendo cómo se llama la rama principal de tu proyecto en GitHub
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}     # Clave secreta de Heroku (Configurar desde GitHub Actions)
+          heroku_app_name: "blog-platzi-bm"                  # Nombre de la aplicación
+          heroku_email: "brandong.manzog@gmail.com"
+          usedocker: true
