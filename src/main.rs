@@ -37,7 +37,7 @@ async fn index(pool: web::Data<DbPool>, template_manager: web::Data<tera::Tera>)
                 template_manager.render("index.html", &ctx).unwrap()
             )
         }
-        Err(err) => HttpResponse::Ok().body("hubo un error"),
+        Err(err) => HttpResponse::Ok().body(err.to_string()),
     };
 }
 

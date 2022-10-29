@@ -2,7 +2,7 @@
 
 diesel::table! {
     posts (id) {
-        id -> Int4,
+        id -> BigInt,
         title -> Varchar,
         slug -> Varchar,
         body -> Text,

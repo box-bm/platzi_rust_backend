@@ -11,7 +11,7 @@ pub struct PostSimplified {
 
 #[derive(Queryable, Debug, Serialize)]
 pub struct Post {
-    pub id: i32,
+    pub id: i64,
     pub title: String,
     pub slug: String,
     pub body: String,
